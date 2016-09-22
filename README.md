@@ -1,5 +1,7 @@
 Turms is a node messenging system. It provides Hub, Subscriber and Message objects.
 
+It is very much in beta, or maybe even pre-beta, so be wary if using it.
+
 Usage:
 
 ```
