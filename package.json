@@ -1,0 +1,17 @@
+{
+  "name": "turms",
+  "version": "0.0.1",
+  "description": "A messenger module for Node. Very beta.",
+  "main": "turms.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests --recursive --watch"
+  },
+  "keywords": [
+    "messenger"
+  ],
+  "author": "krule",
+  "license": "ISC"
+}
