@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "A messenger module for Node. Very beta.",
   "main": "turms.js",
+  "repository": {
+    "type": "git",
+	"url": ""
+  },
   "directories": {
     "test": "tests"
   },
@@ -13,5 +17,8 @@
     "messenger"
   ],
   "author": "krule",
-  "license": "ISC"
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
 }
