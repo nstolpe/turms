@@ -15,27 +15,27 @@ describe('Turms', function() {
 		let message = Turms.Message();
 		expect(message).to.eql(defaultMessage);
 	});
-	it('A Messenger\'s addSubscription() method should add a new subscription object to Messenger.subscriptions. That object should have properties and values corresponding to addSubscription arguments.', function() {
-		let m1 = Turms.Messenger();
-		let m2 = Turms.Messenger();
+	it('A Hub\'s addSubscription() method should add a new subscription object to Messenger.subscriptions. That object should have properties and values corresponding to addSubscription arguments.', function() {
+		let hub = Turms.Hub();
+		let subscriber = Turms.Subscriber();
 		let subscription = {
-			subscriber: m2,
+			subscriber: subscriber,
 			messageType: 'test-message',
 			action: function(data) { console.log(data); }
 		}
-		m1.addSubscription(subscription.subscriber, subscription.messageType, subscription.action);
+		hub.addSubscription(subscription.subscriber, subscription.messageType, subscription.action);
 
-		expect(m1.subscriptions[0]).to.eql(subscription);
+		expect(hub.subscriptions[0]).to.eql(subscription);
 	});
-	it('A Messenger\'s addSubscription() method should return a new subscription object with properties and values corresponding to the arguments passed in', function() {
-		let m1 = Turms.Messenger();
-		let m2 = Turms.Messenger();
+	it('A Hub\'s addSubscription() method should return a new subscription object with properties and values corresponding to the arguments passed in', function() {
+		let hub = Turms.Hub();
+		let subscriber = Turms.Subscriber();
 		let subscription = {
-			subscriber: m2,
+			subscriber: subscriber,
 			messageType: 'test-message',
 			action: function(data) { console.log(data); }
 		}
-		let newSubscription = m1.addSubscription(subscription.subscriber, subscription.messageType, subscription.action);
+		let newSubscription = hub.addSubscription(subscription.subscriber, subscription.messageType, subscription.action);
 
 		expect(newSubscription).to.eql(subscription);
 	});
