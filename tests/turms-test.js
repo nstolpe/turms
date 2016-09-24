@@ -54,7 +54,7 @@ describe('Turms', function() {
 		hub.sendMessage(Turms.Message({ type: 'test-message', recipient: subscriber1 }));
 		expect(recipient).to.eql(subscriber1);
 	});
-	it('When a Hub sends a Message with a recipient option, only that recipient will receive the message', function() {
+	it('When a Hub sends a Message with a delay, the message callback should not be triggered until after the delay has passed', function() {
 		let clock = sinon.useFakeTimers();
 		let timedOut = false;
 		let hub = Turms.Hub();
