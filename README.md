@@ -1,20 +1,20 @@
-Turms is a node messenging system. It provides Hub, Subscriber and Message objects.
+Turms is a simple and lightweight Node messaging system. It provides Hub, Subscriber and Message objects.
 
-It is very much in beta, or maybe even pre-beta, so be wary if using it.
+It's a single file and works solidly in the one project I originally built it for, but it is very much in beta, or maybe even alpha.
 
 Usage:
 
 ```
 const Turms = require('./turms');
 const hub = Turms.Hub();
-const subscriber = Turms.Subscriber(hub);
+const subscriber = Turms.Subscriber();
 
 hub.addSubscription(subscriber, 'message', (message) => console.log(message.data));
 
 hub.sendMessage(
 	Turms.Message({
 		// type could be ignored as 'message' is the default type.
-		// other options are delay and receiver (receiver is as yet unimplemented).
+		// other options are delay and receiver if you'd like to send a message in the future or only to one specific subscriber.
 		type: 'message',
 		data: { foo: 'bar', bar: 'foo' }
 	})
