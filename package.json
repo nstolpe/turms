@@ -1,11 +1,11 @@
 {
   "name": "turms",
   "version": "0.0.1",
-  "description": "A messenger module for Node. Very beta.",
+  "description": "A lightweight messaging module for Node. Very beta.",
   "main": "turms.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/nstolpe/turms"
   },
   "directories": {
     "test": "tests"
