@@ -14,9 +14,12 @@ hub.addSubscription(subscriber, 'message', (message) => console.log(message.data
 hub.sendMessage(
 	Turms.Message({
 		// type could be ignored as 'message' is the default type.
-		// other options are delay and receiver if you'd like to send a message in the future or only to one specific subscriber.
 		type: 'message',
 		data: { foo: 'bar', bar: 'foo' }
+		// other options are:
+		//     delay, for sending a message in the future
+		// and 
+		//     recipient, for sending a message only to a specific subscriber
 	})
 );
 ```
