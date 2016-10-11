@@ -27,7 +27,7 @@ module.exports = {
 	Subscriber: function() {
 		return {
 			receiveMessage: function(action, message) {
-				action(message);
+				action.call(this, message);
 			}
 		}
 	},
