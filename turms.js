@@ -66,7 +66,7 @@ module.exports = {
 				});
 			},
 			/**
-			 * Filtres subscriptions based on messageType and/or recipient
+			 * Filters subscriptions based on messageType and/or recipient
 			 */
 			filterSubscriptions: function(message) {
 				return this.subscriptions.filter((subscription) => {
