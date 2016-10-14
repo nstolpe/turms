@@ -2,6 +2,8 @@ Turms is a simple and lightweight Node messaging system. It provides Hub, Subscr
 
 It's a single file and works solidly in the one project I originally built it for, but it is very much in beta, or maybe even alpha.
 
+Turms has no dependencies unless you want to run the tests. Then it uses Mocha and Chai.
+
 Usage:
 
 ```
@@ -18,7 +20,7 @@ hub.sendMessage(
 		data: { foo: 'bar', bar: 'foo' }
 		// other options are:
 		//     delay, for sending a message in the future
-		// and 
+		// and
 		//     recipient, for sending a message only to a specific subscriber
 	})
 );
