@@ -22,7 +22,7 @@ module.exports = {
 		});
 	},
 	/**
-	 * An object that can receive messages. Useful by itself or with Object.assign(ob, subscriber)
+	 * Returns object that can receive messages. Can be used by itself itself or with Object.assign(ob, subscriber)
 	 */
 	Subscriber: function() {
 		return {
@@ -60,10 +60,13 @@ module.exports = {
 			 * @param messageType A string value corresponding to Message.type on an incoming Message.
 			 */
 			removeSubscription: function(subscriber, messageType) {
-				this.subscriptions.reduce((p, c, i, a) => {
-					if (c.subscriber === subscriber) a.splice(i,1);
-					return a;
+				let subscriptions = this.subscriptions.filter((subscription) => {
+					return subscription.subscriber === subscriber && subscription.messageType === messageType;
 				});
+				for (let i = 0, l = subscriptions.length; i < l; i++) {
+					let idx = this.subscriptions.indexOf(subscriptions[i]);
+					if (idx >= 0) this.subscriptions.splice(idx, 1);
+				}
 			},
 			/**
 			 * Filters subscriptions based on messageType and/or recipient
