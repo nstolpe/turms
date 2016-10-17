@@ -12,7 +12,7 @@ module.exports = {
 	 * @return object  A new Message object.
 	 */
 	Message: function(options) {
-		if (!options) options = Object.create(null);
+		if (!options) options = {};
 
 		return Object.assign(Object.create(null), {
 			type: options.type || 'message',
