@@ -6,7 +6,7 @@ Turms has no dependencies unless you want to run the tests. Then it uses Mocha a
 
 Usage:
 
-```
+```javascript
 const Turms = require('./turms');
 const hub = Turms.Hub();
 const subscriber = Turms.Subscriber();
@@ -28,7 +28,7 @@ hub.sendMessage(
 
 Output:
 
-```
+```javascript
 { foo: 'bar', bar: 'foo' }
 ```
 
