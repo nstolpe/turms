@@ -43,7 +43,7 @@ module.exports = {
 			 * @param  subscriber   A Subscriber object.
 			 * @param  messageType  A string value corresponding to Message.type on an incoming Message
 			 * @param  action       A callback that will be triggered when the subscriber receives a Message.
-			 * @return Object       The subscription object, useful for caching and late use with removeSubscription().
+			 * @return Object       The subscription object. Can be used with removeSubscription.
 			 */
 			addSubscription: function(subscriber, messageType, action) {
 				let subscription = {
@@ -56,16 +56,17 @@ module.exports = {
 			},
 			/**
 			 * Removes a subscription with a specific type and specific subscriber.
-			 * @param subscriber  A Subscriber object.
-			 * @param messageType A string value corresponding to Message.type on an incoming Message.
+			 * @param subscription  A subscription to remove.
+			 * @return true if the subscription was successfully removes, false if not.
 			 */
-			removeSubscription: function(subscriber, messageType) {
-				let subscriptions = this.subscriptions.filter((subscription) => {
-					return subscription.subscriber === subscriber && subscription.messageType === messageType;
-				});
-				for (let i = 0, l = subscriptions.length; i < l; i++) {
-					let idx = this.subscriptions.indexOf(subscriptions[i]);
-					if (idx >= 0) this.subscriptions.splice(idx, 1);
+			removeSubscription: function(subscription) {
+				let idx = this.subscriptions.indexOf(subscription);
+
+				if (idx >= 0) {
+					this.subscriptions.splice(idx, 1);
+					return true;
+				} else {
+					return false;
 				}
 			},
 			/**
@@ -78,6 +79,11 @@ module.exports = {
 						message.type === subscription.messageType;
 				});
 			},
+			/**
+			 * Sends a message to all registered subscribers. If there is a delay, queues the message instead.
+			 * @param The message to send. See Message for object structure.
+			 * @return undefined or a Timeout if the message was delayed.
+			 */
 			sendMessage: function(message) {
 				if (message.delay > 0)
 					return this.queueMessage(message);
