@@ -9,7 +9,7 @@ module.exports = {
 	 *                 Defaults to an object with null prototype.
 	 * @param delay    The length of time a message will wait before being sent. Defaults to 0.
 	 * @param recipient An optional Messenger object that will receive this message.
-	 * @return object  A new Message object.
+	 * @return object  An object with type, data, delay and recipient properties.
 	 */
 	Message: function(options) {
 		if (!options) options = {};
