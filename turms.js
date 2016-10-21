@@ -104,6 +104,9 @@ module.exports = {
 				}, delay);
 				this.queue.push(timeout);
 				return timeout;
+			},
+			dequeueMessage: function(timeout) {
+				
 			}
 		};
 	}
