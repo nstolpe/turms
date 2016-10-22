@@ -1,13 +1,15 @@
-function timer(duration, interval, onEnd, onInterval) {
+'use strict'
+
+const timer = function(duration, interval, onEnd, onInterval) {
 	function run(instance) {
         if(step++ == steps) {
 			timeout = undefined;
 			instance.complete = true;
-            onEnd(steps, step);
+            onEnd.call(instance);
         } else {
 			let diff = (new Date().getTime() - startTime) - (step * speed);
 
-            if (onInterval) onInterval(steps, step);
+            if (onInterval) onInterval.call(instance);
 
 			instance.elapsed = new Date().getTime() - startTime;
             timeout = setTimeout(function() { run(instance); }, (speed - diff));
@@ -23,6 +25,8 @@ function timer(duration, interval, onEnd, onInterval) {
 			duration: duration,
 			elapsed: 0,
 			complete: false,
+			step: 0,
+			steps: steps,
 			start() {
 				startTime = new Date().getTime();
 				step = 0;
@@ -37,4 +41,5 @@ function timer(duration, interval, onEnd, onInterval) {
 
 	return instance;
 }
-var foo = timer(5000, 100, () => console.log('foo'));
+
+module.exports = timer;
