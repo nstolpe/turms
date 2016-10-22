@@ -2,7 +2,7 @@
 
 const timer = function(duration, interval, onEnd, onInterval) {
 	function run(instance) {
-        if(step++ == steps) {
+        if(instance.step++ == instance.steps) {
 			timeout = undefined;
 			instance.complete = true;
             onEnd.call(instance);
