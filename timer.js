@@ -1,11 +1,13 @@
 'use strict'
 
 const timer = function(duration, interval, onEnd, onInterval) {
-    let steps = (duration / 100) * (interval / 10),
+    // let steps = (duration / 100) * (interval / 10),
+    let steps = duration / interval,
         speed = duration / steps,
 		timeout,
 		run = function(instance) {
 	        if(instance.step++ == instance.steps) {
+				instance.elapsed = new Date().getTime() - instance.startTime;
 				timeout = undefined;
 				instance.complete = true;
 	            onEnd.call(instance);
