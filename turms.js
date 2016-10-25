@@ -2,7 +2,7 @@
 
 module.exports = {
 	/**
-	 * An object to be sent to or received by a Messenger.
+	 * Returns an object to be sent to or received by a Messenger.
 	 * @param type     A string value that will be used by Messenger.send() to determine
 	 *                 which of it's subscribers receive() method is called. Defaults to 'message'.
 	 * @param data     A data object for use in the action callback when a message is sent.
@@ -22,7 +22,7 @@ module.exports = {
 		});
 	},
 	/**
-	 * Returns object that can receive messages. Can be used by itself itself or with Object.assign(ob, subscriber)
+	 * Returns an object that can receive messages. Can be used by itself itself or with Object.assign(ob, subscriber)
 	 */
 	Subscriber: function() {
 		return {
@@ -32,7 +32,7 @@ module.exports = {
 		}
 	},
 	/**
-	 * An object that manages subscribers and dispatches messages to them.
+	 * Returns an object that manages subscribers and dispatches messages to them.
 	 */
 	Hub: function() {
 		return {
@@ -55,9 +55,9 @@ module.exports = {
 				return subscription;
 			},
 			/**
-			 * Removes a subscription with a specific type and specific subscriber.
+			 * Removes a specific subscription from `subscriptions[]`.
 			 * @param subscription  A subscription to remove.
-			 * @return true if the subscription was successfully removes, false if not.
+			 * @return true if the subscription was successfully found and removed, false if not.
 			 */
 			removeSubscription: function(subscription) {
 				let idx = this.subscriptions.indexOf(subscription);
@@ -70,7 +70,7 @@ module.exports = {
 				}
 			},
 			/**
-			 * Filters subscriptions based on messageType and/or recipient
+			 * Filters subscriptions based on messageType and recipient or just messageType.
 			 */
 			filterSubscriptions: function(message) {
 				return this.subscriptions.filter((subscription) => {
@@ -80,7 +80,7 @@ module.exports = {
 				});
 			},
 			/**
-			 * Sends a message to all registered subscribers. If there is a delay, queues the message instead.
+			 * Sends a message to all valid subscribers. If there is a delay, queues the message instead.
 			 * @param The message to send. See Message for object structure.
 			 * @return undefined or a Timeout if the message was delayed.
 			 */
@@ -92,6 +92,7 @@ module.exports = {
 
 				for (let i = 0, l = subscriptions.length; i < l; i++)
 					subscriptions[i].subscriber.receiveMessage(subscriptions[i].action, message);
+
 				return undefined;
 			},
 			queueMessage: function(message) {
@@ -106,7 +107,7 @@ module.exports = {
 				return timeout;
 			},
 			dequeueMessage: function(timeout) {
-				
+
 			}
 		};
 	}
