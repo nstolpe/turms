@@ -27,6 +27,9 @@ const timer = function(duration, interval, onEnd, onInterval) {
     let steps = Math.floor(duration / interval),
 		timeout,
 		fracStep = duration % interval !== 0 ? duration % interval : null,
+		/*
+		 * Runs a step in an `instance`.
+		 */
 		run = function(instance) {
 			let diff;
 
@@ -43,6 +46,9 @@ const timer = function(duration, interval, onEnd, onInterval) {
 	            timeout = setTimeout(function() { run(instance); }, (interval - diff));
 	        }
 	    },
+		/*
+		 * Ends the `instance` object passed to it.
+		 */
 		end = function(instance) {
 			timeout = undefined;
 			instance.elapsed = new Date().getTime() - instance.startTime;
@@ -57,12 +63,19 @@ const timer = function(duration, interval, onEnd, onInterval) {
 		complete: false,
 		step: 0,
 		steps: steps,
+		/*
+		 * Called to make a Timer start running. Can be called immediately after
+		 * creation, just don't assign to a variable.
+		 */
 		start() {
 			this.startTime = new Date().getTime();
 			this.step = 0;
 			this.elapsed = 0;
 			timeout = setTimeout(function() { run(instance); }, interval);
 		},
+		/*
+		 * Cancels a running timer.
+		 */
 		cancel() {
 			clearTimeout(timeout);
 			timeout = undefined;

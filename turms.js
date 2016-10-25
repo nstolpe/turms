@@ -1,4 +1,5 @@
 'use strict'
+const Timer = require('./timer');
 
 module.exports = {
 	/**
@@ -50,8 +51,10 @@ module.exports = {
 					subscriber: subscriber,
 					messageType: messageType,
 					action: action
-				}
+				};
+
 				this.subscriptions.push(subscription);
+
 				return subscription;
 			},
 			/**
@@ -70,7 +73,10 @@ module.exports = {
 				}
 			},
 			/**
-			 * Filters subscriptions based on messageType and recipient or just messageType.
+			 * Filters subscriptions based on messageType and recipient or just
+			 * messageType, based on presence of `message.recipient`.
+			 *
+			 * @param message An object that has some or all of the fields of `Message`.
 			 */
 			filterSubscriptions: function(message) {
 				return this.subscriptions.filter((subscription) => {
@@ -80,9 +86,10 @@ module.exports = {
 				});
 			},
 			/**
-			 * Sends a message to all valid subscribers. If there is a delay, queues the message instead.
+			 * Sends a message to all valid subscribers. If there is a delay,
+			 * queues the message instead.
 			 * @param The message to send. See Message for object structure.
-			 * @return undefined or a Timeout if the message was delayed.
+			 * @return undefined or a `Timer` if the message was delayed.
 			 */
 			sendMessage: function(message) {
 				if (message.delay > 0)
@@ -95,19 +102,33 @@ module.exports = {
 
 				return undefined;
 			},
+			/**
+			 * For Messages with delay. Adds them to `queue`.
+			 * Uses `timer` and will return a `timer` object
+			 */
 			queueMessage: function(message) {
 				let delay = message.delay,
-					timeout;
-				message.delay = 0;
-				timeout = setTimeout((timeout) => {
-					this.sendMessage(message);
-					this.queue.splice(this.queue.indexOf(timeout), 1);
-				}, delay);
-				this.queue.push(timeout);
-				return timeout;
-			},
-			dequeueMessage: function(timeout) {
+					timer;
 
+				message.delay = 0;
+
+				timer = Timer(delay, 10, () => {
+						this.sendMessage(message);
+						this.queue.splice(this.queue.indexOf(timer), 1);
+					});
+
+				timer.start();
+				this.queue.push(timer);
+
+				return timer;
+			},
+			dequeueMessage: function(timer) {
+				let idx = this.queue.indexOf(timer);
+
+				if (idx >= 0) {
+					this.queue[idx].cancel();
+					this.queue.splice(idx, 1);
+				}
 			}
 		};
 	}
