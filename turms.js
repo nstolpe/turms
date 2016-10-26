@@ -105,6 +105,9 @@ module.exports = {
 			/**
 			 * For Messages with delay. Adds them to `queue`.
 			 * Uses `timer` and will return a `timer` object
+			 * @param   message  The `Message` to be queued
+			 * @return  An instance of `Timer` set to send the message and remove
+			 *          itself from `queue` once it triggers
 			 */
 			queueMessage: function(message) {
 				let delay = message.delay,
@@ -122,13 +125,20 @@ module.exports = {
 
 				return timer;
 			},
+			/**
+			 * Removes a `Timer` for a pending message from `queue`.
+			 * @param timer     Instance of `Timer` that should be fremoved
+			 * @return boolean  true if timer is found and removed, false if not
+			 */
 			dequeueMessage: function(timer) {
 				let idx = this.queue.indexOf(timer);
 
 				if (idx >= 0) {
 					this.queue[idx].cancel();
 					this.queue.splice(idx, 1);
+					return true;
 				}
+				return false;
 			}
 		};
 	}
