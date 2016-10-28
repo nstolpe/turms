@@ -32,4 +32,4 @@ Output:
 { foo: 'bar', bar: 'foo' }
 ```
 
-The Subscriber object provides access to a single function, `receiveMessage`, which only receives two arguments: `action` and `message`. `action` is the callback defined in `addSubscription` and message is the Message passed to `sendMessage`. The `action` callback should expect a single argument that corresponds the message and act on it accordingly.
+More documentation can be found at the [Wiki](https://github.com/nstolpe/turms/wiki).
