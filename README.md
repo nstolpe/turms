@@ -1,6 +1,6 @@
 Turms is a simple and lightweight Node messaging system. It provides Hub, Subscriber and Message objects.
 
-It's a single file and works solidly in the one project I originally built it for, but it is very much in beta, or maybe even alpha.
+Turms consists of two modules/files. `turms.js` is the messenger and provides factory functions for `Message`, `Subscriber` and `Hub` objects. `timer.js` is a more accurate and self-adjusting alternative to `setTimeout` that `Hub` uses for sending delayed messages.
 
 Turms has no dependencies unless you want to run the tests. Then it uses Mocha and Chai.
 
