@@ -9,6 +9,14 @@ function Receipt(message, timer) {
 	return Object.assign(Object.create(null), { Message: message, Timer: timer });
 }
 
+function Subscription(options) {
+	return Object.assign(Object.create(null), {
+		subscriber: options.subscriber,
+		messageType: options.messageType,
+		action: options.action
+	});
+}
+
 module.exports = {
 	/**
 	 * Returns an object to be sent to or received by a Messenger.
@@ -55,11 +63,11 @@ module.exports = {
 			 * @return Object       The subscription object. Can be used with removeSubscription.
 			 */
 			addSubscription: function(subscriber, messageType, action) {
-				let subscription = {
+				let subscription = Subscription({
 					subscriber: subscriber,
 					messageType: messageType,
 					action: action
-				};
+				});
 
 				this.subscriptions.push(subscription);
 
