@@ -6,7 +6,7 @@ const Timer = require('./timer');
  * Pass to `cancelMessage` to cancel a queued message.
  */
 function Receipt(message, timer) {
-	return Object.assign(Object.create(null), { Message: message, Timer: timer });
+	return Object.assign(Object.create(null), { message: message, timer: timer });
 }
 
 function Subscription(options) {
@@ -131,6 +131,8 @@ module.exports = {
 
 				message.delay = 0;
 
+				// Timer.interval is hardcoded at 10.
+				// maybe expose that.
 				timer = Timer(delay, 10, () => {
 						this.sendMessage(message);
 						this.queue.splice(this.queue.indexOf(timer), 1);
@@ -147,7 +149,7 @@ module.exports = {
 			 * @return boolean  true if timer is found and removed, false if not
 			 */
 			cancelMessage: function(receipt) {
-				let idx = this.queue.indexOf(receipt.Timer);
+				let idx = this.queue.indexOf(receipt.timer);
 
 				if (idx >= 0) {
 					this.queue[idx].cancel();
