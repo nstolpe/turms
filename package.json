@@ -1,7 +1,7 @@
 {
   "name": "turms",
   "version": "0.1.0",
-  "description": "A lightweight messaging module for Node. Very beta.",
+  "description": "A lightweight messaging module for Node.",
   "main": "turms.js",
   "repository": {
     "type": "git",
