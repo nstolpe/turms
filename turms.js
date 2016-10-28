@@ -1,6 +1,14 @@
 'use strict'
 const Timer = require('./timer');
 
+/**
+ * An object returned on the successful sending or queueing of a message.
+ * Pass to `cancelMessage` to cancel a queued message.
+ */
+function Receipt(message, timer) {
+	return Object.assign(Object.create(null), { Message: message, Timer: timer });
+}
+
 module.exports = {
 	/**
 	 * Returns an object to be sent to or received by a Messenger.
@@ -100,7 +108,7 @@ module.exports = {
 				for (let i = 0, l = subscriptions.length; i < l; i++)
 					subscriptions[i].subscriber.receiveMessage(subscriptions[i].action, message);
 
-				return undefined;
+				return Receipt(message);
 			},
 			/**
 			 * For Messages with delay. Adds them to `queue`.
@@ -123,15 +131,15 @@ module.exports = {
 				timer.start();
 				this.queue.push(timer);
 
-				return timer;
+				return Receipt(message, timer);
 			},
 			/**
 			 * Removes a `Timer` for a pending message from `queue`.
-			 * @param timer     Instance of `Timer` that should be fremoved
+			 * @param receipt    Object that holds the `Message` and `Timer`
 			 * @return boolean  true if timer is found and removed, false if not
 			 */
-			dequeueMessage: function(timer) {
-				let idx = this.queue.indexOf(timer);
+			cancelMessage: function(receipt) {
+				let idx = this.queue.indexOf(receipt.Timer);
 
 				if (idx >= 0) {
 					this.queue[idx].cancel();
